@@ -1,0 +1,11 @@
+.DS_Store
+.git
+.gitignore
+.Rapp.history
+.Rhistory
+^LICENSE\.md$
+\.fsrc$
+\.o$
+\.so$
+^.*\.Rproj$
+^\.Rproj\.user$

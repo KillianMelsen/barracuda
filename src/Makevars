@@ -1,0 +1,31 @@
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
+
+### CUDA
+CUDA_HOME = /usr/local/cuda-12.3
+CUDA_INC = $(CUDA_HOME)/include
+
+### R
+R_HOME = /home/killianmelsen/R/x86_64-pc-linux-gnu-library/4.4
+R_INC = /usr/share/R/include
+RCPP_INC = $(R_HOME)/Rcpp/include
+ARMA_INC = $(R_HOME)/RcppArmadillo/include
+
+### NVCC
+NVCC = $(CUDA_HOME)/bin/nvcc
+NVCC_FLAGS = -x cu -Xcompiler "-fPIC" -gencode arch=compute_86,code=sm_86
+NVCC_INC = -I$(CUDA_INC) -I$(R_INC) -I$(RCPP_INC) -I$(ARMA_INC)
+
+###PKG_LIBS = -L$(CUDA_HOME)/lib64 -Wl,-rpath,$(CUDA_HOME)/lib64 -lcudart
+PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS) -L$(CUDA_HOME)/lib64 -Wl,-rpath,$(CUDA_HOME)/lib64 -lcudart -lcublas
+
+### Define objects
+sharedlibs = code.o RcppExports.o
+sources = code.cpp RcppExports.cpp
+OBJECTS = $(sharedlibs)
+all: barracuda.so
+barracuda.so: $(OBJECTS)
+
+%.o: %.cpp $(sources)
+	$(NVCC) $(NVCC_FLAGS) $(NVCC_INC) -o $@ -c $<
+
+
