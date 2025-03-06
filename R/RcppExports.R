@@ -5,7 +5,19 @@
     .Call(`_barracuda_getDeviceProps`, id)
 }
 
-.dgemm <- function(A, B) {
-    .Call(`_barracuda_dgemm`, A, B)
+.cuBLASdgemm <- function(A, B) {
+    .Call(`_barracuda_cuBLASdgemm`, A, B)
+}
+
+.cuBLASsgemm <- function(A, B) {
+    .Call(`_barracuda_cuBLASsgemm`, A, B)
+}
+
+.cuBLASdgemm_ABAt <- function(A, B) {
+    .Call(`_barracuda_cuBLASdgemm_ABAt`, A, B)
+}
+
+.sgemm_naive <- function(A, B) {
+    .Call(`_barracuda_sgemm_naive`, A, B)
 }
 

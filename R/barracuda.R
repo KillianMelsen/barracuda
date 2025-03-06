@@ -25,16 +25,61 @@ getDeviceProps = function(id = 0) {
   cat(msg)
 }
 
-#' dgemm
+#' cuBLASdgemm
 #' 
-#' The \code{dgemm} function multiplies two matrices on the GPU.
+#' The \code{cuBLASdgemm} function multiplies two matrices on the GPU.
 #'
 #' @param A Left matrix
 #' @param B Right matrix
 #'
 #' @return The result of \code{A \%*\% B}.
 #' @export
-dgemm = function(A, B) {
-  C <- .dgemm(A, B)
+cuBLASdgemm = function(A, B) {
+  C <- .cuBLASdgemm(A, B)
   return(C)
 }
+
+#' cuBLASdgemm_ABAt
+#' 
+#' The \code{cuBLASdgemm_ABAt} function computes ABAt on the GPU.
+#'
+#' @param A Left and right (transposed) matrix
+#' @param B Right matrix
+#'
+#' @return The result of \code{A \%*\% B \%*\% t(A)}.
+#' @export
+cuBLASdgemm_ABAt = function(A, B) {
+  C <- .cuBLASdgemm_ABAt(A, B)
+  return(C)
+}
+
+#' sgemm_naive
+#' 
+#' The \code{sgemm_naive} function multiplies two float32 matrices on the GPU using
+#' a naive kernel.
+#'
+#' @param A Left matrix
+#' @param B Right matrix
+#'
+#' @return The result of \code{A \%*\% B}.
+#' @export
+sgemm_naive = function(A, B) {
+  C <- .sgemm_naive(t(A), t(B))
+  return(t(C))
+}
+
+#' cuBLASsgemm
+#' 
+#' The \code{cuBLASsgemm} function multiplies two matrices on the GPU (float32).
+#'
+#' @param A Left matrix
+#' @param B Right matrix
+#'
+#' @return The result of \code{A \%*\% B}.
+#' @export
+cuBLASsgemm = function(A, B) {
+  C <- .cuBLASsgemm(A, B)
+  return(C)
+}
+
+

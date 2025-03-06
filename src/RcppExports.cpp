@@ -22,22 +22,61 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// dgemm
-arma::mat dgemm(const arma::mat& A, const arma::mat& B);
-RcppExport SEXP _barracuda_dgemm(SEXP ASEXP, SEXP BSEXP) {
+// cuBLASdgemm
+arma::dmat cuBLASdgemm(const arma::dmat& A, const arma::dmat& B);
+RcppExport SEXP _barracuda_cuBLASdgemm(SEXP ASEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(dgemm(A, B));
+    Rcpp::traits::input_parameter< const arma::dmat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::dmat& >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(cuBLASdgemm(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cuBLASsgemm
+arma::fmat cuBLASsgemm(const arma::fmat& A, const arma::fmat& B);
+RcppExport SEXP _barracuda_cuBLASsgemm(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::fmat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::fmat& >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(cuBLASsgemm(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cuBLASdgemm_ABAt
+arma::dmat cuBLASdgemm_ABAt(const arma::dmat& A, const arma::dmat& B);
+RcppExport SEXP _barracuda_cuBLASdgemm_ABAt(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::dmat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::dmat& >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(cuBLASdgemm_ABAt(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sgemm_naive
+arma::fmat sgemm_naive(const arma::fmat& A, const arma::fmat& B);
+RcppExport SEXP _barracuda_sgemm_naive(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::fmat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::fmat& >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(sgemm_naive(A, B));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_barracuda_getDeviceProps", (DL_FUNC) &_barracuda_getDeviceProps, 1},
-    {"_barracuda_dgemm", (DL_FUNC) &_barracuda_dgemm, 2},
+    {"_barracuda_cuBLASdgemm", (DL_FUNC) &_barracuda_cuBLASdgemm, 2},
+    {"_barracuda_cuBLASsgemm", (DL_FUNC) &_barracuda_cuBLASsgemm, 2},
+    {"_barracuda_cuBLASdgemm_ABAt", (DL_FUNC) &_barracuda_cuBLASdgemm_ABAt, 2},
+    {"_barracuda_sgemm_naive", (DL_FUNC) &_barracuda_sgemm_naive, 2},
     {NULL, NULL, 0}
 };
 
